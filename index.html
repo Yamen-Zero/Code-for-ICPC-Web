@@ -1,0 +1,644 @@
+<style>
+    .AAA {
+        color:#5191CE;
+        text-decoration: underline;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدليل الشامل للمسابقة البرمجية - ICPC</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        cf: {
+                            blue: '#5191CE',
+                            yellow: '#FFCC00',
+                            red: '#D92828'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* إعدادات المتغيرات للوضع الداكن والفاتح */
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --text-heading: #ffffff;
+            --text-muted: #8b949e;
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --glow-intensity: 0.8;
+            --balloon-opacity: 0.15;
+            --input-bg: #161b22;
+        }
+
+        .light-mode {
+            --bg-color: #f3f4f6;
+            --text-color: #374151;
+            --text-heading: #111827;
+            --text-muted: #6b7280;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --glow-intensity: 0;
+            --balloon-opacity: 0.3;
+            --input-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        h1, h2, h3, h4 { color: var(--text-heading); transition: color 0.4s ease; }
+        .text-muted { color: var(--text-muted); font-size: 24px; }
+
+        .glow-blue { text-shadow: 0 0 10px rgba(81, 145, 206, var(--glow-intensity)); }
+        .glow-red { text-shadow: 0 0 10px rgba(217, 40, 40, var(--glow-intensity)); }
+        .glow-yellow { text-shadow: 0 0 10px rgba(255, 204, 0, var(--glow-intensity)); }
+
+        .border-glow-blue { border-color: rgba(81, 145, 206, 0.6); box-shadow: 0 0 15px rgba(81, 145, 206, calc(var(--glow-intensity) * 0.4)); }
+        .border-glow-red { border-color: rgba(217, 40, 40, 0.6); box-shadow: 0 0 15px rgba(217, 40, 40, calc(var(--glow-intensity) * 0.4)); }
+        .border-glow-yellow { border-color: rgba(255, 204, 0, 0.6); box-shadow: 0 0 15px rgba(255, 204, 0, calc(var(--glow-intensity) * 0.4)); }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            transition: background-color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+        }
+
+        .codeforces-block {
+            background-color: var(--bg-color);
+            border: 1px solid var(--card-border);
+            border-right: 4px solid #D92828;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .themed-input {
+            background-color: var(--input-bg);
+            color: var(--text-heading);
+            border: 1px solid var(--card-border);
+        }
+
+        /* الشعار ثلاثي الأبعاد الصلب مع الزوايا المنحنية وترتيب الألوان المعدل */
+        .cf-3d-scene {
+            perspective: 1000px;
+            width: 150px;
+            height: 120px;
+            margin: 0 auto 2rem;
+        }
+
+        .cf-3d-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin-3d 10s infinite linear;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        .cf-3d-bar {
+            position: relative;
+            width: 30px;
+            transform-style: preserve-3d;
+        }
+
+        .cf-3d-bar .face {
+            position: absolute;
+            background: inherit;
+        }
+        
+        .cf-3d-bar .front, .cf-3d-bar .back, .cf-3d-bar .left, .cf-3d-bar .right {
+            width: 30px;
+            bottom: 0;
+            height: 100%;
+            /* زوايا منحنية للأعمدة من الأعلى */
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .cf-3d-bar .front  { transform: translateZ(15px); }
+        .cf-3d-bar .back   { transform: rotateY(180deg) translateZ(15px); filter: brightness(0.5); }
+        .cf-3d-bar .right  { transform: rotateY(90deg) translateZ(15px); filter: brightness(0.8); }
+        .cf-3d-bar .left   { transform: rotateY(-90deg) translateZ(15px); filter: brightness(0.6); }
+        .cf-3d-bar .top    { 
+            width: 30px; height: 30px; top: 0; 
+            transform: rotateX(90deg) translateZ(15px); 
+            filter: brightness(1.2);
+            /* تدوير السقف ليطابق الأوجه الجانبية */
+            border-radius: 12px; 
+        }
+
+        /* ترتيب الألوان والأطوال حسب الصورة (أصفر، أزرق، أحمر) */
+        .bar-y { height: 75px; background: #FFCC00; box-shadow: 0 0 15px rgba(255,204,0,calc(var(--glow-intensity) * 0.5)); transform: translateZ(10px); }
+        .bar-b { height: 115px; background: #5191CE; box-shadow: 0 0 15px rgba(81,145,206,calc(var(--glow-intensity) * 0.5)); transform: translateZ(10px); }
+        .bar-r { height: 55px; background: #D92828; box-shadow: 0 0 15px rgba(217,40,40,calc(var(--glow-intensity) * 0.5)); transform: translateZ(10px); }
+
+        @keyframes spin-3d {
+            from { transform: rotateY(0deg) rotateX(-10deg); }
+            to { transform: rotateY(360deg) rotateX(-10deg); }
+        }
+
+        /* البوالين (للصفحة الرئيسية) */
+        .balloons-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: -1; overflow: hidden;
+            opacity: var(--balloon-opacity); transition: opacity 0.4s ease;
+        }
+
+        .balloon-wrapper { position: absolute; bottom: -150px; animation: float-up linear infinite; }
+        .balloon {
+            width: 70px; height: 85px; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            position: relative; box-shadow: inset -10px -10px 20px rgba(0,0,0,0.3), 0 0 15px currentColor;
+        }
+        .balloon::before {
+            content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+            border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 8px solid currentColor;
+        }
+        .balloon::after {
+            content: ''; position: absolute; bottom: -50px; left: 50%; width: 1px; height: 45px;
+            background: rgba(32, 18, 18, 0.5); transform: translateX(-50%);
+        }
+
+        /* البطيخات المتمايزة (لصفحة البطيخة) */
+        .watermelons-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: -1; overflow: hidden;
+            opacity: var(--balloon-opacity); transition: opacity 0.4s ease;
+            display: none; /* مخفية افتراضياً */
+        }
+        .watermelon-wrapper { 
+            position: absolute; 
+            bottom: -150px; 
+            animation: float-up-spin linear infinite; 
+            user-select: none;
+        }
+
+        .bg-b-cf-blue { background: #5191CE; color: #5191CE; }
+        .bg-b-cf-yellow { background: #FFCC00; color: #FFCC00; }
+        .bg-b-cf-red { background: #D92828; color: #D92828; }
+
+        @keyframes float-up {
+            0% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-60vh) rotate(5deg); }
+            100% { transform: translateY(-120vh) rotate(-5deg); }
+        }
+
+        @keyframes float-up-spin {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-60vh) rotate(180deg); }
+            100% { transform: translateY(-120vh) rotate(360deg); }
+        }
+
+        /* تأثير الظهور عند التمرير */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* إخفاء الصفحات (للتنقل في الموقع المدمج) */
+        .page-hidden { display: none !important; }
+        
+        /* حركة انتقال الصفحات */
+        .page-fade-in { animation: fadeIn 0.5s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="relative flex flex-col min-h-screen">
+
+    <!-- أزرار التحكم العائمة (Global UI) -->
+    <div class="fixed top-5 left-5 z-50">
+        <button id="theme-toggle" onclick="toggleTheme()" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-xl hover:scale-110 transition-transform shadow-lg cursor-pointer">
+            <i id="theme-icon" class="fa-solid fa-sun text-cf-yellow"></i>
+        </button>
+    </div>
+
+    <!-- زر العودة للرئيسية (يظهر فقط في صفحة المسألة) -->
+    <div id="btn-back" class="fixed top-5 right-5 z-50 page-hidden">
+        <button onclick="switchPage('home')" class="glass-card px-6 py-2 rounded-full flex items-center gap-2 hover:bg-cf-blue hover:text-white transition shadow-lg text-sm font-bold cursor-pointer">
+            <i class="fa-solid fa-house"></i> العودة للرئيسية
+        </button>
+    </div>
+
+    <!-- زينة البوالين (الصفحة الرئيسية) -->
+    <div class="balloons-container" id="balloons">
+        <div class="balloon-wrapper" style="left: 10%; animation-duration: 16s; animation-delay: 0s;"><div class="balloon bg-b-cf-blue"></div></div>
+        <div class="balloon-wrapper" style="left: 25%; animation-duration: 19s; animation-delay: 3s;"><div class="balloon bg-b-cf-yellow"></div></div>
+        <div class="balloon-wrapper" style="left: 80%; animation-duration: 21s; animation-delay: 1s;"><div class="balloon bg-b-cf-red"></div></div>
+        <div class="balloon-wrapper" style="left: 65%; animation-duration: 17s; animation-delay: 6s;"><div class="balloon bg-b-cf-blue"></div></div>
+        <div class="balloon-wrapper" style="left: 45%; animation-duration: 20s; animation-delay: 8s;"><div class="balloon bg-b-cf-yellow"></div></div>
+    </div>
+
+    <!-- زينة البطيخ المتمايز (لصفحة البطيخة) -->
+    <div class="watermelons-container" id="watermelons">
+        <div class="watermelon-wrapper" style="left: 12%; animation-duration: 14s; animation-delay: 0s; font-size: 3rem;">🍉</div>
+        <div class="watermelon-wrapper" style="left: 30%; animation-duration: 18s; animation-delay: 2s; font-size: 4.5rem; filter: hue-rotate(10deg);">🍉</div>
+        <div class="watermelon-wrapper" style="left: 78%; animation-duration: 20s; animation-delay: 1s; font-size: 2.5rem; transform: scaleX(-1);">🍉</div>
+        <div class="watermelon-wrapper" style="left: 60%; animation-duration: 16s; animation-delay: 5s; font-size: 3.8rem; filter: saturate(1.5);">🍉</div>
+        <div class="watermelon-wrapper" style="left: 45%; animation-duration: 22s; animation-delay: 7s; font-size: 5rem;">🍉</div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- الصفحة 1: الرئيسية (الدليل الشامل) -->
+    <!-- ============================================== -->
+    <div id="page-home" class="page-fade-in flex-grow flex flex-col">
+        <header class="relative pt-24 pb-12 text-center z-10 px-4">
+            <!-- الشعار 3D المعدل (أصفر - أزرق - أحمر) -->
+            <div class="cf-3d-scene reveal">
+                <div class="cf-3d-wrapper">
+                    <!-- العمود الأصفر (يسار) -->
+                    <div class="cf-3d-bar bar-y">
+                        <div class="face front"></div><div class="face back"></div>
+                        <div class="face right"></div><div class="face left"></div><div class="face top"></div>
+                    </div>
+                    <!-- العمود الأزرق (وسط) -->
+                    <div class="cf-3d-bar bar-b">
+                        <div class="face front"></div><div class="face back"></div>
+                        <div class="face right"></div><div class="face left"></div><div class="face top"></div>
+                    </div>
+                    <!-- العمود الأحمر (يمين) -->
+                    <div class="cf-3d-bar bar-r">
+                        <div class="face front"></div><div class="face back"></div>
+                        <div class="face right"></div><div class="face left"></div><div class="face top"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal max-w-4xl mx-auto mt-6">
+                <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight leading-snug">
+                    الدليل <span class="text-cf-blue glow-blue">الشامل</span> للمسابقة <span class="text-cf-yellow glow-yellow">البرمجية</span>
+                </h1>
+            </div>
+        </header>
+
+        <main class="flex-grow container mx-auto px-4 relative z-10 space-y-24 pb-20">
+            <!-- قسم المعلومات -->
+            <section class="reveal scroll-mt-20">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-black mb-3">ما هي <span class="text-cf-blue glow-blue">المسابقة البرمجية؟</span></h2>
+                    <p class="text-muted text-lg">هي مسابقة تنافسية تعتمد على الذكاء والسرعة والخوارزميات الدقيقة.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-8 rounded-2xl border-t-2 border-t-cf-blue border-glow-blue text-center hover:scale-105">
+                        <div class="text-cf-blue text-5xl mb-4 glow-blue"><i class="fa-solid fa-user-group"></i></div>
+                        <h3 class="text-xl font-bold mb-3">الفريق</h3>
+                        <p class="text-muted">يتكون الفريق من <span class="text-cf-blue font-bold">3 أشخاص</span> يتنافسون مع الفرق الأخرى لحل المسائل بكفاءة عالية.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-2xl border-t-2 border-t-cf-yellow border-glow-yellow text-center hover:scale-105">
+                        <div class="text-cf-yellow text-5xl mb-4 glow-yellow"><i class="fa-solid fa-code"></i></div>
+                        <h3 class="text-xl font-bold mb-3">المسائل</h3>
+                        <p class="text-muted">تتضمن المسابقة من <span class="text-cf-yellow font-bold text-lg">12 إلى 15 مسألة</span> برمجية متدرجة الصعوبة.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-2xl border-t-2 border-t-cf-red border-glow-red text-center hover:scale-105">
+                        <div class="text-cf-red text-5xl mb-4 glow-red"><i class="fa-solid fa-stopwatch"></i></div>
+                        <h3 class="text-xl font-bold mb-3">الوقت</h3>
+                        <p class="text-muted">يجب حل أكبر عدد ممكن من المسائل خلال مدة زمنية قدرها <span class="text-cf-red font-bold">5 ساعات</span> متواصلة.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- الفوائد -->
+            <section class="reveal">
+                <h2 class="text-3xl font-black mb-10 text-center">أبرز <span class="text-cf-yellow glow-yellow">الفوائد</span> المكتسبة</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                    <div class="glass-card p-6 rounded-xl flex gap-4">
+                        <div class="text-cf-blue text-3xl"><i class="fa-solid fa-lightbulb"></i></div>
+                        <div><h4 class="font-bold text-xl mb-2">تطوير المهارات الذهنية</h4><p class="text-muted">تعزيز القدرة على التفكير خارج الصندوق والعمل بكفاءة تحت الضغط.</p></div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex gap-4">
+                        <div class="text-cf-red text-3xl"><i class="fa-solid fa-handshake-angle"></i></div>
+                        <div><h4 class="font-bold text-xl mb-2">تعزيز العمل الجماعي</h4><p class="text-muted">توزيع المهام بذكاء، فالمسألة الواحدة قد تتطلب عدة أفكار يبرع كل عضو في جزء منها.</p></div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex gap-4">
+                        <div class="text-cf-yellow text-3xl"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div><h4 class="font-bold text-xl mb-2">التمهيد للحياة الجامعية</h4><p class="text-muted">تطوير التفكير الخوارزمي الذي يُعد الركيزة الأساسية في كل السنوات الدراسية.</p></div>
+                    </div>
+                    <div class="glass-card p-6 rounded-xl flex gap-4">
+                        <div class="text-gray-400 text-3xl"><i class="fa-solid fa-shirt"></i></div>
+                        <div><h4 class="font-bold text-xl mb-2">مزايا إضافية</h4><p class="text-muted">الحصول على القميص الرسمي للمسابقة. تقتصر فرص المشاركة على 5 مرات فقط.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- خطوات التحضير للمسابقة (القسم الجديد) -->
+            <section class="reveal">
+                <h2 class="text-3xl font-black mb-10 text-center">خطوات العمل للتحضير <span class="text-cf-blue glow-blue">للمسابقة البرمجية</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <!-- Step 1 -->
+                    <div class="glass-card p-8 rounded-2xl border-t-2 border-t-cf-blue border-glow-blue hover:-translate-y-2 transition-transform duration-300">
+                        <div class="text-cf-blue text-4xl mb-4 glow-blue text-center"><i class="fa-solid fa-laptop-code"></i></div>
+                        <h3 class="text-lg font-bold mb-3">1. ما الذي أحتاجه قبل حضور المعسكر؟</h3>
+                        <p class="text-muted text-sm leading-relaxed">ستحتاج إلى بناء أساس برمجي جيد، ويتمثل ذلك في إتقان أساسيات لغة البرمجة (C++) وفهم المفاهيم العامة للبرمجة.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="glass-card p-8 rounded-2xl border-t-2 border-t-cf-yellow border-glow-yellow hover:-translate-y-2 transition-transform duration-300">
+                        <div class="text-cf-yellow text-4xl mb-4 glow-yellow text-center"><i class="fa-brands fa-youtube"></i></div>
+                        <h3 class="text-lg font-bold mb-3">2. المعسكر لا يزال بعيداً، ماذا أفعل الآن؟</h3>
+                        <p class="text-muted text-sm leading-relaxed">يمكنك استغلال وقتك الحالي بتعلم أساسيات لغة C++ عبر منصة يوتيوب. هناك العديد من القنوات المتميزة التي تشرح هذه الأساسيات ببساطة.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="glass-card p-8 rounded-2xl border-t-2 border-t-cf-red border-glow-red hover:-translate-y-2 transition-transform duration-300">
+                        <div class="text-cf-red text-4xl mb-4 glow-red text-center"><i class="fa-solid fa-globe"></i></div>
+                        <h3 class="text-lg font-bold mb-3">3. أنهيت الأساسيات ولدي وقت إضافي، ما الخطوة التالية؟</h3>
+                        <p class="text-muted text-sm leading-relaxed">إذا أنهيت تعلم الأساسيات، ننصحك بإنشاء حساب على منصة كود فورسيس - <a href="https://codeforces.com/" class="AAA"> CodeForces </a>. ابدأ بحل المسائل البسيطة للتدرب على بيئة الموقع، ولا تقلق بشأن التفاصيل المتقدمة، ففي المعسكر ستتعلم كل شيء يخص هذه المنصة بشكل احترافي.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- سوق العمل (نون) -->
+            <section class="reveal">
+                <div class="glass-card p-10 rounded-3xl border border-cf-yellow/20 text-center max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-black mb-6">هل للمسابقة قيمة في <span class="text-cf-yellow glow-yellow">سوق العمل؟</span></h2>
+                    <p class="text-lg text-muted mb-10 leading-relaxed">بالتأكيد! التأهل للمسابقات الوطنية والإقليمية يجعلك هدفاً بارزاً للشركات الكبرى التي تعتمد على التفكير الخوارزمي في مقابلاتها.</p>
+                    <div class="glass-card p-8 rounded-2xl border-2 border-cf-yellow border-glow-yellow mx-auto max-w-md transform hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 text-cf-yellow opacity-10 text-9xl"><i class="fa-solid fa-building"></i></div>
+                        <div class="relative z-10">
+                            <div class="text-cf-yellow text-6xl mb-4 glow-yellow"><span class="font-black tracking-tighter">noon</span></div>
+                            <h3 class="text-2xl font-bold mb-2">شركة نون</h3>
+                            <p class="text-muted">من أبرز الشركات الرائدة التي تعتمد في مقابلاتها على اختبارات تقييم مهارات حل المشكلات المتقدمة وهيكلة البيانات.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- زر الانتقال للمسألة -->
+            <section class="reveal max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-black mb-3">فقرة تفاعلية: <span class="text-cf-red glow-red">تحدي المسائل</span></h2>
+                    <p class="text-muted">تذوق طعم المنافسة التنافسية وتعرف على نمط التفكير في Codeforces.</p>
+                </div>
+                <div class="text-center mt-6">
+                    <button onclick="switchPage('problem')" class="inline-block bg-cf-red hover:bg-red-700 text-white font-bold px-8 py-4 rounded-xl transition-all shadow-lg border-glow-red text-xl transform hover:scale-105 cursor-pointer">
+                        انتقل إلى مسألة البطيخة <i class="fa-solid fa-arrow-left mr-2"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- الصفحة 2: صفحة المسألة (Watermelon) -->
+    <!-- ============================================== -->
+    <div id="page-problem" class="page-hidden page-fade-in flex-grow flex flex-col">
+        <main class="flex-grow container mx-auto px-4 py-24 max-w-4xl">
+            <div class="glass-card p-10 rounded-2xl shadow-xl">
+                <!-- Problem Header -->
+                <div class="text-center mb-8 border-b border-gray-600/30 pb-6">
+                    <div class="inline-block bg-black/30 text-cf-blue border border-cf-blue px-3 py-1 rounded text-sm font-mono font-bold mb-3">Problem 4A</div>
+                    <h1 class="text-4xl font-black text-cf-red mb-2">🍉 مسألة البطيخة (Watermelon)</h1>
+                    <div class="text-sm opacity-70 font-mono">
+                        Time limit per test: 1 second | Memory limit per test: 64 megabytes
+                    </div>
+                </div>
+
+                <!-- Problem Statement -->
+                <div class="space-y-6 text-lg leading-relaxed">
+                    <p>
+                        في يوم صيفي حار، قرر <strong>يامن</strong> وصديقه <strong>وافي</strong> شراء بطيخة. اختارا أكبر وأجمل بطيخة برأيهما. بعد وزنها، أظهر الميزان أن وزنها هو <code class="font-mono text-cf-yellow font-bold">w</code> كيلوغرام. سارعا إلى المنزل وهما يتضوران عطشاً، وقررا تقسيم البطيخة، لكنهما واجها مشكلة صعبة.
+                    </p>
+                    <p>
+                        يامن ووافي من أشد المعجبين بالأرقام الزوجية، لذا فهما يريدان تقسيم البطيخة بحيث يزن كل قسم من القسمين <strong>عدداً زوجياً من الكيلوغرامات</strong>، وفي الوقت نفسه لا يُشترط أن يكون القسمان متساويين في الوزن. الصبيان متعبان للغاية ويريدان البدء في تناول البطيخة بأسرع ما يمكن، لذلك عليك مساعدتهما ومعرفة ما إذا كان بإمكانهما تقسيم البطيخة بالطريقة التي يريدانها. 
+                        <br>
+                        <span class="text-sm opacity-75">(بالتأكيد، يجب أن يحصل كل منهما على قسم بوزن موجب أكبر من الصفر).</span>
+                    </p>
+                </div>
+
+                <!-- Input / Output Section -->
+                <div class="mt-10 space-y-8">
+                    <div>
+                        <h3 class="text-xl font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-right-to-bracket text-cf-blue"></i> المدخلات (Input)
+                        </h3>
+                        <div class="codeforces-block font-mono">
+                            يحتوي السطر الأول والوحيد من الدخل على عدد صحيح <span class="text-cf-yellow">w</span> 
+                            <span class="text-sm opacity-75">(1 ≤ w ≤ 100)</span> 
+                            — وهو وزن البطيخة التي اشتراها الصبيان.
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-cf-yellow"></i> المخرجات (Output)
+                        </h3>
+                        <div class="codeforces-block !border-r-cf-yellow font-mono">
+                            اطبع <span class="text-green-500 font-bold">YES</span> (نعم)، إذا كان بإمكان الصبيين تقسيم البطيخة إلى قسمين، يزن كل منهما عدداً زوجياً من الكيلوغرامات؛ 
+                            واطبع <span class="text-cf-red font-bold">NO</span> (لا) في الحالة المعاكسة.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم التجريب، التلميح، والحل -->
+                <div class="mt-12 border-t border-gray-600/30 pt-8">
+                    <h3 class="text-2xl font-black mb-6 text-center text-cf-blue glow-blue">تفاعل مع المسألة</h3>
+                    
+                    <!-- تجريب الكود -->
+                    <div class="glass-card p-6 rounded-xl border border-cf-blue/30 mb-6">
+                        <h4 class="text-lg font-bold flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-flask text-cf-blue"></i> جرب الدخل (Test Cases)
+                        </h4>
+                        <div class="flex flex-col sm:flex-row gap-4 items-center">
+                            <input type="number" id="test-w" placeholder="أدخل وزن البطيخة (w)" class="w-full sm:w-auto px-4 py-2 rounded-lg themed-input focus:outline-none focus:border-cf-blue transition-colors">
+                            <button onclick="testWatermelon()" class="bg-cf-blue hover:bg-blue-600 text-white px-8 py-2 rounded-lg font-bold transition-colors shadow-lg cursor-pointer">فحص</button>
+                            <div id="test-result" class="text-3xl font-black mr-auto mr-4" dir="ltr"></div>
+                        </div>
+                    </div>
+
+                    <!-- أزرار المساعدة والحل -->
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <button onclick="toggleSection('hint-section')" class="bg-cf-yellow text-black hover:bg-yellow-500 px-6 py-3 rounded-lg font-bold transition-colors shadow-lg flex items-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-lightbulb"></i> إظهار تلميح
+                        </button>
+                        <button onclick="toggleSection('code-section')" class="bg-gray-800 text-white hover:bg-gray-700 px-6 py-3 rounded-lg font-bold transition-colors shadow-lg border border-gray-600 flex items-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-code"></i> عرض الحل
+                        </button>
+                    </div>
+
+                    <!-- التلميح -->
+                    <div id="hint-section" class="hidden mt-6 p-5 glass-card border-r-4 border-r-cf-yellow rounded-lg text-lg">
+                        <strong>💡 تلميح:</strong> فكر متى يكون الرقم الزوجي قابلاً للقسمة إلى رقمين زوجيين. هل كل الأرقام الزوجية تقبل ذلك؟ ماذا عن الرقم 2 إذا قسمناه إلى جزأين موجبين أكبر من الصفر؟
+                    </div>
+
+                    <!-- كود الحل -->
+                    <div id="code-section" class="hidden mt-6 space-y-6">
+                        <!-- الحل بلغة C++ -->
+                        <div class="codeforces-block !border-r-cf-blue">
+                            <h4 class="font-bold text-cf-blue mb-3 text-lg flex items-center gap-2">
+                                <i class="fa-brands fa-cuttlefish"></i>++ الحل بلغة 
+                            </h4>
+                            <pre class="text-left font-mono text-sm overflow-x-auto p-4 bg-black rounded-lg text-gray-200" dir="ltr"><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    int w;
+    cin &gt;&gt; w;
+
+    if (w % 2 == 0 &amp;&amp; w != 2)
+        cout &lt;&lt; "YES";
+    else 
+        cout &lt;&lt; "NO";
+
+    return 0;
+}</code></pre>
+                        </div>
+
+                        <!-- الحل بلغة Python -->
+                        <div class="codeforces-block !border-r-cf-yellow">
+                            <h4 class="font-bold text-cf-yellow mb-3 text-lg flex items-center gap-2">
+                                <i class="fa-brands fa-python"></i> الحل بلغة Python
+                            </h4>
+                            <pre class="text-left font-mono text-sm overflow-x-auto p-4 bg-black rounded-lg text-gray-200" dir="ltr"><code>w = int(input())
+
+if (w % 2 == 0 and w != 2):
+    print("YES")
+else:
+    print("NO")</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- الفوتر المشترك للموقع -->
+    <footer class="border-t border-gray-600/30 glass-card py-6 text-center mt-auto z-10 relative w-full">
+        <p class="text-muted text-sm font-mono tracking-widest">
+            <span class="text-cf-blue">ICPC</span> & <span class="text-cf-red">CODEFORCES</span> <span class="text-cf-yellow">GUIDE</span>
+        </p>
+    </footer>
+
+    <!-- سكربتات التحكم -->
+    <script>
+        // إعداد الوضع الفاتح والداكن
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        let isLightMode = localStorage.getItem('theme') === 'light';
+        if (isLightMode) {
+            body.classList.add('light-mode');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+            themeIcon.classList.replace('text-cf-yellow', 'text-cf-blue');
+        }
+
+        function toggleTheme() {
+            body.classList.toggle('light-mode');
+            isLightMode = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+            
+            if (isLightMode) {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                themeIcon.classList.replace('text-cf-yellow', 'text-cf-blue');
+            } else {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                themeIcon.classList.replace('text-cf-blue', 'text-cf-yellow');
+            }
+        }
+
+        // نظام التنقل بين الصفحات وتغيير الخلفيات
+        function switchPage(targetPage) {
+            const pageHome = document.getElementById('page-home');
+            const pageProblem = document.getElementById('page-problem');
+            const btnBack = document.getElementById('btn-back');
+            const balloons = document.getElementById('balloons');
+            const watermelons = document.getElementById('watermelons');
+
+            if (targetPage === 'problem') {
+                pageHome.classList.add('page-hidden');
+                pageProblem.classList.remove('page-hidden');
+                btnBack.classList.remove('page-hidden');
+                balloons.style.display = 'none'; // إخفاء البوالين
+                watermelons.style.display = 'block'; // إظهار البطيخ
+            } else {
+                pageProblem.classList.add('page-hidden');
+                btnBack.classList.add('page-hidden');
+                pageHome.classList.remove('page-hidden');
+                balloons.style.display = 'block'; // إظهار البوالين
+                watermelons.style.display = 'none'; // إخفاء البطيخ
+            }
+
+            // التمرير لأعلى الصفحة عند التبديل
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // إعادة تفعيل تأثيرات الظهور في حال العودة للرئيسية
+            if (targetPage === 'home') {
+                setTimeout(() => {
+                    revealElements.forEach(el => {
+                        if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+                            el.classList.add('active');
+                        }
+                    });
+                }, 100);
+            }
+        }
+
+        // دالة تجريب الحل التفاعلي
+        function testWatermelon() {
+            const inputVal = document.getElementById('test-w').value;
+            const resEl = document.getElementById('test-result');
+            
+            if(inputVal === '') { 
+                resEl.innerText = ''; 
+                return; 
+            }
+            
+            const w = parseInt(inputVal);
+            
+            if (w % 2 === 0 && w !== 2) {
+                resEl.innerText = 'YES';
+                resEl.className = 'text-3xl font-black mr-auto mr-4 text-green-500 drop-shadow-md';
+            } else {
+                resEl.innerText = 'NO';
+                resEl.className = 'text-3xl font-black mr-auto mr-4 text-cf-red drop-shadow-md';
+            }
+        }
+
+        // دالة إظهار وإخفاء الأقسام (تلميح / حل)
+        function toggleSection(sectionId) {
+            const el = document.getElementById(sectionId);
+            el.classList.toggle('hidden');
+        }
+
+        // تأثير الظهور عند التمرير
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('active'); }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

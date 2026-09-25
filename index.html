@@ -1,5 +1,6 @@
 <style>
-    .AAA {
+    .AAA
+    {
         color:#5191CE;
         text-decoration: underline;
     }
@@ -20,16 +21,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
-        tailwind.config = {
+        tailwind.config = 
+        {
             darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
+            theme: 
+            {
+                extend: 
+                {
+                    fontFamily: 
+                    {
                         sans: ['Cairo', 'sans-serif'],
                         mono: ['Fira Code', 'monospace'],
                     },
-                    colors: {
-                        cf: {
+                    colors: 
+                    {
+                        cf: 
+                        {
                             blue: '#5191CE',
                             yellow: '#FFCC00',
                             red: '#D92828'
@@ -42,7 +49,8 @@
     
     <style>
         /* إعدادات المتغيرات للوضع الداكن والفاتح */
-        :root {
+        :root 
+        {
             --bg-color: #0d1117;
             --text-color: #c9d1d9;
             --text-heading: #ffffff;
@@ -54,7 +62,8 @@
             --input-bg: #161b22;
         }
 
-        .light-mode {
+        .light-mode 
+        {
             --bg-color: #f3f4f6;
             --text-color: #374151;
             --text-heading: #111827;
@@ -66,7 +75,8 @@
             --input-bg: #ffffff;
         }
 
-        body {
+        body 
+        {
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -86,14 +96,16 @@
         .border-glow-red { border-color: rgba(217, 40, 40, 0.6); box-shadow: 0 0 15px rgba(217, 40, 40, calc(var(--glow-intensity) * 0.4)); }
         .border-glow-yellow { border-color: rgba(255, 204, 0, 0.6); box-shadow: 0 0 15px rgba(255, 204, 0, calc(var(--glow-intensity) * 0.4)); }
 
-        .glass-card {
+        .glass-card 
+        {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             border: 1px solid var(--card-border);
             transition: background-color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
         }
 
-        .codeforces-block {
+        .codeforces-block 
+        {
             background-color: var(--bg-color);
             border: 1px solid var(--card-border);
             border-right: 4px solid #D92828;
@@ -103,21 +115,24 @@
             transition: background-color 0.4s ease, border-color 0.4s ease;
         }
 
-        .themed-input {
+        .themed-input 
+        {
             background-color: var(--input-bg);
             color: var(--text-heading);
             border: 1px solid var(--card-border);
         }
 
         /* الشعار ثلاثي الأبعاد الصلب مع الزوايا المنحنية وترتيب الألوان المعدل */
-        .cf-3d-scene {
+        .cf-3d-scene 
+        {
             perspective: 1000px;
             width: 150px;
             height: 120px;
             margin: 0 auto 2rem;
         }
 
-        .cf-3d-wrapper {
+        .cf-3d-wrapper 
+        {
             width: 100%;
             height: 100%;
             position: relative;
@@ -129,18 +144,21 @@
             gap: 12px;
         }
 
-        .cf-3d-bar {
+        .cf-3d-bar 
+        {
             position: relative;
             width: 30px;
             transform-style: preserve-3d;
         }
 
-        .cf-3d-bar .face {
+        .cf-3d-bar .face 
+        {
             position: absolute;
             background: inherit;
         }
         
-        .cf-3d-bar .front, .cf-3d-bar .back, .cf-3d-bar .left, .cf-3d-bar .right {
+        .cf-3d-bar .front, .cf-3d-bar .back, .cf-3d-bar .left, .cf-3d-bar .right 
+        {
             width: 30px;
             bottom: 0;
             height: 100%;
@@ -153,7 +171,8 @@
         .cf-3d-bar .back   { transform: rotateY(180deg) translateZ(15px); filter: brightness(0.5); }
         .cf-3d-bar .right  { transform: rotateY(90deg) translateZ(15px); filter: brightness(0.8); }
         .cf-3d-bar .left   { transform: rotateY(-90deg) translateZ(15px); filter: brightness(0.6); }
-        .cf-3d-bar .top    { 
+        .cf-3d-bar .top    
+        { 
             width: 30px; height: 30px; top: 0; 
             transform: rotateX(90deg) translateZ(15px); 
             filter: brightness(1.2);
@@ -166,40 +185,47 @@
         .bar-b { height: 115px; background: #5191CE; box-shadow: 0 0 15px rgba(81,145,206,calc(var(--glow-intensity) * 0.5)); transform: translateZ(10px); }
         .bar-r { height: 55px; background: #D92828; box-shadow: 0 0 15px rgba(217,40,40,calc(var(--glow-intensity) * 0.5)); transform: translateZ(10px); }
 
-        @keyframes spin-3d {
+        @keyframes spin-3d 
+        {
             from { transform: rotateY(0deg) rotateX(-10deg); }
             to { transform: rotateY(360deg) rotateX(-10deg); }
         }
 
         /* البوالين (للصفحة الرئيسية) */
-        .balloons-container {
+        .balloons-container 
+        {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: -1; overflow: hidden;
             opacity: var(--balloon-opacity); transition: opacity 0.4s ease;
         }
 
         .balloon-wrapper { position: absolute; bottom: -150px; animation: float-up linear infinite; }
-        .balloon {
+        .balloon 
+        {
             width: 70px; height: 85px; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
             position: relative; box-shadow: inset -10px -10px 20px rgba(0,0,0,0.3), 0 0 15px currentColor;
         }
-        .balloon::before {
+        .balloon::before 
+        {
             content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
             border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 8px solid currentColor;
         }
-        .balloon::after {
+        .balloon::after 
+        {
             content: ''; position: absolute; bottom: -50px; left: 50%; width: 1px; height: 45px;
             background: rgba(32, 18, 18, 0.5); transform: translateX(-50%);
         }
 
         /* البطيخات المتمايزة (لصفحة البطيخة) */
-        .watermelons-container {
+        .watermelons-container 
+        {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: -1; overflow: hidden;
             opacity: var(--balloon-opacity); transition: opacity 0.4s ease;
             display: none; /* مخفية افتراضياً */
         }
-        .watermelon-wrapper { 
+        .watermelon-wrapper 
+        { 
             position: absolute; 
             bottom: -150px; 
             animation: float-up-spin linear infinite; 
@@ -210,13 +236,15 @@
         .bg-b-cf-yellow { background: #FFCC00; color: #FFCC00; }
         .bg-b-cf-red { background: #D92828; color: #D92828; }
 
-        @keyframes float-up {
+        @keyframes float-up 
+        {
             0% { transform: translateY(0) rotate(-5deg); }
             50% { transform: translateY(-60vh) rotate(5deg); }
             100% { transform: translateY(-120vh) rotate(-5deg); }
         }
 
-        @keyframes float-up-spin {
+        @keyframes float-up-spin 
+        {
             0% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-60vh) rotate(180deg); }
             100% { transform: translateY(-120vh) rotate(360deg); }
@@ -546,41 +574,50 @@ else:
         const body = document.body;
 
         let isLightMode = localStorage.getItem('theme') === 'light';
-        if (isLightMode) {
+        if (isLightMode) 
+        {
             body.classList.add('light-mode');
             themeIcon.classList.replace('fa-sun', 'fa-moon');
             themeIcon.classList.replace('text-cf-yellow', 'text-cf-blue');
         }
 
-        function toggleTheme() {
+        function toggleTheme() 
+        {
             body.classList.toggle('light-mode');
             isLightMode = body.classList.contains('light-mode');
             localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
             
-            if (isLightMode) {
+            if (isLightMode) 
+            {
                 themeIcon.classList.replace('fa-sun', 'fa-moon');
                 themeIcon.classList.replace('text-cf-yellow', 'text-cf-blue');
-            } else {
+            } 
+            else 
+            {
                 themeIcon.classList.replace('fa-moon', 'fa-sun');
                 themeIcon.classList.replace('text-cf-blue', 'text-cf-yellow');
             }
         }
 
         // نظام التنقل بين الصفحات وتغيير الخلفيات
-        function switchPage(targetPage) {
+        function switchPage(targetPage) 
+        {
             const pageHome = document.getElementById('page-home');
             const pageProblem = document.getElementById('page-problem');
             const btnBack = document.getElementById('btn-back');
             const balloons = document.getElementById('balloons');
             const watermelons = document.getElementById('watermelons');
 
-            if (targetPage === 'problem') {
+            if (targetPage === 'problem') 
+            {
                 pageHome.classList.add('page-hidden');
                 pageProblem.classList.remove('page-hidden');
                 btnBack.classList.remove('page-hidden');
                 balloons.style.display = 'none'; // إخفاء البوالين
                 watermelons.style.display = 'block'; // إظهار البطيخ
-            } else {
+            } 
+            else 
+            {
                 pageProblem.classList.add('page-hidden');
                 btnBack.classList.add('page-hidden');
                 pageHome.classList.remove('page-hidden');
@@ -592,10 +629,14 @@ else:
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
             // إعادة تفعيل تأثيرات الظهور في حال العودة للرئيسية
-            if (targetPage === 'home') {
-                setTimeout(() => {
-                    revealElements.forEach(el => {
-                        if (el.getBoundingClientRect().top < window.innerHeight - 50) {
+            if (targetPage === 'home') 
+            {
+                setTimeout(() => 
+                {
+                    revealElements.forEach(el => 
+                    {
+                        if (el.getBoundingClientRect().top < window.innerHeight - 50) 
+                        {
                             el.classList.add('active');
                         }
                     });
@@ -604,36 +645,44 @@ else:
         }
 
         // دالة تجريب الحل التفاعلي
-        function testWatermelon() {
+        function testWatermelon() 
+        {
             const inputVal = document.getElementById('test-w').value;
             const resEl = document.getElementById('test-result');
             
-            if(inputVal === '') { 
+            if(inputVal === '') 
+            { 
                 resEl.innerText = ''; 
                 return; 
             }
             
             const w = parseInt(inputVal);
             
-            if (w % 2 === 0 && w !== 2) {
+            if (w % 2 === 0 && w !== 2) 
+            {
                 resEl.innerText = 'YES';
                 resEl.className = 'text-3xl font-black mr-auto mr-4 text-green-500 drop-shadow-md';
-            } else {
+            } 
+            else 
+            {
                 resEl.innerText = 'NO';
                 resEl.className = 'text-3xl font-black mr-auto mr-4 text-cf-red drop-shadow-md';
             }
         }
 
         // دالة إظهار وإخفاء الأقسام (تلميح / حل)
-        function toggleSection(sectionId) {
+        function toggleSection(sectionId) 
+        {
             const el = document.getElementById(sectionId);
             el.classList.toggle('hidden');
         }
 
         // تأثير الظهور عند التمرير
         const revealElements = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+        const observer = new IntersectionObserver((entries) => 
+        {
+            entries.forEach(entry => 
+            {
                 if (entry.isIntersecting) { entry.target.classList.add('active'); }
             });
         }, { threshold: 0.1 });
